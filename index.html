@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chargement</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;800&display=swap">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Fond -->
+<div id="bg"></div>
+<div id="light"></div>
+<div id="clouds">
+    <img class="cloud c0" src="img/cloud0.png" alt="">
+    <img class="cloud c1" src="img/cloud1.png" alt="">
+    <img class="cloud c2" src="img/cloud2.png" alt="">
+    <img class="cloud c3" src="img/cloud3.png" alt="">
+</div>
+<div id="embers"></div>
+
+<div id="stage">
+
+<!-- Personnages -->
+<img id="characters" src="img/characters.png" alt="">
+
+<!-- Cadre décoratif -->
+<img id="header-l" src="img/header_l.png" alt="">
+<img id="header-r" src="img/header_r.png" alt="">
+<img id="footer" src="img/footer.png" alt="">
+
+<!-- Contenu -->
+<div id="content">
+    <div id="title-block">
+        <img class="title-line" src="img/title_line.png" alt="">
+        <h1 id="server-name">Pryst Demon Slayer</h1>
+        <div id="subtitle">Pourfendeurs <span class="sep">&#9876;</span> Démons</div>
+        <div id="details">
+            <span id="map">—</span>
+            <span class="dot">&#9670;</span>
+            <span id="players">— joueurs max</span>
+        </div>
+    </div>
+
+    <div id="tips">
+        <img class="wave w0" src="img/wave0.png" alt="">
+        <img class="wave w1" src="img/wave1.png" alt="">
+        <div id="tips-title"><span>Le saviez-vous ?</span></div>
+        <div id="tip-text"></div>
+        <div id="tip-dots"></div>
+    </div>
+</div>
+
+<!-- Progression -->
+<div id="loader">
+    <div id="status-line">
+        <span id="status">Connexion au serveur…</span>
+        <span id="percent">0 %</span>
+    </div>
+    <div id="gauge">
+        <div id="gauge-track"><div id="gauge-fill"><div id="gauge-shine"></div></div></div>
+        <img id="gauge-frame" src="img/gauge_frame.png" alt="">
+    </div>
+    <div id="file">&nbsp;</div>
+</div>
+
+</div><!-- /stage -->
+
+<audio id="music" loop preload="auto"></audio>
+
+<script src="config.js"></script>
+<script src="loading.js"></script>
+</body>
+</html>

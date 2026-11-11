@@ -1,0 +1,203 @@
+/* =====================================================================
+   Écran de chargement — Demon Slayer RP
+   Tout est dessiné sur une scène de 1920 px de large, mise à l'échelle par loading.js.
+   ===================================================================== */
+* { margin: 0; padding: 0; -webkit-box-sizing: border-box; box-sizing: border-box; }
+
+html, body {
+    width: 100%; height: 100%; overflow: hidden;
+    background: #1a0306;
+    color: #f6e7c8;
+    font-family: "Shippori Mincho", "Noto Serif JP", Georgia, "Times New Roman", serif;
+    -webkit-user-select: none; user-select: none;
+    cursor: default;
+}
+img { display: block; border: 0; }
+
+/* ---------- Fond (plein écran, hors scène) ---------- */
+#bg {
+    position: fixed; left: -4%; top: -4%; width: 108%; height: 108%;
+    background: #3a0609 url(img/bg.jpg) center center no-repeat;
+    background-size: cover;
+    -webkit-animation: kenburns 40s ease-in-out infinite alternate;
+    animation: kenburns 40s ease-in-out infinite alternate;
+}
+#bg:after { /* vignette */
+    content: ""; position: absolute; left: 0; top: 0; right: 0; bottom: 0;
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(0,0,0,0) 45%, rgba(10,0,2,.75) 100%);
+    background: radial-gradient(ellipse at center, rgba(0,0,0,0) 45%, rgba(10,0,2,.75) 100%);
+}
+#light {
+    position: fixed; left: 0; bottom: 0; width: 70%; height: 90%;
+    background: url(img/light.png) left bottom no-repeat;
+    background-size: 100% 100%;
+    opacity: .35;
+    -webkit-animation: pulse 6s ease-in-out infinite;
+    animation: pulse 6s ease-in-out infinite;
+}
+
+#clouds { position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; }
+.cloud { position: absolute; opacity: .16; }
+.c0 { top: 9%;  left: 40%; width: 30%; -webkit-animation: drift 70s linear infinite; animation: drift 70s linear infinite; }
+.c1 { top: 30%; left: 62%; width: 38%; -webkit-animation: drift 95s linear infinite reverse; animation: drift 95s linear infinite reverse; }
+.c2 { top: 56%; left: 30%; width: 34%; opacity: .10; -webkit-animation: drift 120s linear infinite; animation: drift 120s linear infinite; }
+.c3 { top: 4%;  left: 75%; width: 26%; opacity: .12; -webkit-animation: drift 85s linear infinite reverse; animation: drift 85s linear infinite reverse; }
+
+#embers { position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; pointer-events: none; }
+.ember {
+    position: absolute; bottom: -20px; border-radius: 50%;
+    background: -webkit-radial-gradient(center, circle, #fff3c4 0%, #ffb23f 35%, rgba(255,80,20,0) 70%);
+    background: radial-gradient(circle, #fff3c4 0%, #ffb23f 35%, rgba(255,80,20,0) 70%);
+    -webkit-animation-name: rise; animation-name: rise;
+    -webkit-animation-timing-function: linear; animation-timing-function: linear;
+    -webkit-animation-iteration-count: infinite; animation-iteration-count: infinite;
+}
+
+/* ---------- Scène mise à l'échelle ---------- */
+#stage {
+    position: absolute; left: 0; top: 0; width: 1920px; height: 1080px;
+    -webkit-transform-origin: 0 0; transform-origin: 0 0;
+}
+
+#characters {
+    position: absolute; left: -40px; bottom: 0; height: 1080px; width: auto;
+    /* fondu en haut : pas de bord visible sur les écrans 4:3 / 16:10 */
+    -webkit-mask-image: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%, #000 12%);
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 12%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0) 0%, #000 12%);
+    -webkit-animation: slideRight 1.4s cubic-bezier(.2,.7,.2,1) both, float 9s ease-in-out 1.4s infinite;
+    animation: slideRight 1.4s cubic-bezier(.2,.7,.2,1) both, float 9s ease-in-out 1.4s infinite;
+}
+
+#header-l { position: absolute; left: 0; top: 0; width: 420px; -webkit-animation: fadeDown 1.2s .2s both; animation: fadeDown 1.2s .2s both; }
+#header-r { position: absolute; right: 0; top: 0; width: 420px; -webkit-animation: fadeDown 1.2s .35s both; animation: fadeDown 1.2s .35s both; }
+#footer   { position: absolute; left: 0; bottom: 0; width: 100%; height: 300px; -webkit-animation: fadeUp 1.2s .1s both; animation: fadeUp 1.2s .1s both; }
+
+/* ---------- Colonne de droite ---------- */
+#content {
+    position: absolute; left: 50%; right: 4%; top: 100px;
+    text-align: center;
+}
+
+#title-block { -webkit-animation: fadeIn 1.4s .5s both; animation: fadeIn 1.4s .5s both; }
+.title-line { margin: 0 auto 4px; width: 170px; }
+#server-name {
+    font-size: 84px; font-weight: 800; line-height: 1.05; letter-spacing: 2px;
+    color: #f7d58a;
+    text-shadow: 0 0 2px #3b0a00, 0 3px 0 #6d1f05, 0 6px 18px rgba(0,0,0,.85), 0 0 40px rgba(255,140,40,.35);
+}
+#subtitle {
+    margin-top: 10px; font-size: 30px; letter-spacing: 6px; text-transform: uppercase;
+    color: #f6e7c8; text-shadow: 0 2px 8px rgba(0,0,0,.9);
+}
+#subtitle .sep { color: #ff8a3d; margin: 0 10px; }
+#details {
+    display: inline-block; margin-top: 22px; padding: 8px 34px;
+    font-size: 24px; color: #fbeccd;
+    background: -webkit-linear-gradient(left, rgba(20,2,4,0), rgba(20,2,4,.75) 20%, rgba(20,2,4,.75) 80%, rgba(20,2,4,0));
+    background: linear-gradient(to right, rgba(20,2,4,0), rgba(20,2,4,.75) 20%, rgba(20,2,4,.75) 80%, rgba(20,2,4,0));
+    border-top: 1px solid rgba(232,190,110,.55); border-bottom: 1px solid rgba(232,190,110,.55);
+}
+#details .dot { color: #e0a64b; margin: 0 14px; font-size: 16px; }
+
+/* Carte des astuces */
+#tips {
+    position: relative; width: 760px; margin: 64px auto 0; min-height: 190px;
+    padding: 56px 60px 34px;
+    border-style: solid; border-width: 34px;
+    -webkit-border-image: url(img/tips_base.png) 34 34 34 34 stretch;
+    border-image: url(img/tips_base.png) 34 fill / 34px stretch;
+    color: #4a1508;
+    -webkit-animation: fadeUp 1.2s .8s both; animation: fadeUp 1.2s .8s both;
+}
+#tips .wave { position: absolute; opacity: .55; }
+#tips .w0 { right: -30px; bottom: -30px; width: 260px; }
+#tips .w1 { left: -24px; top: 40px; width: 300px; opacity: .45; }
+#tips-title {
+    position: absolute; left: 50%; top: -76px; margin-left: -330px;
+    width: 660px; height: 106px; line-height: 106px;
+    background: url(img/tips_title.png) center center no-repeat; background-size: 100% 100%;
+    font-size: 32px; font-weight: 800; letter-spacing: 3px; color: #7a1d0b;
+    text-shadow: 0 1px 0 rgba(255,255,255,.7);
+}
+#tip-text {
+    position: relative; font-size: 30px; line-height: 1.45; text-align: center;
+    -webkit-transition: opacity .6s ease, -webkit-transform .6s ease;
+    transition: opacity .6s ease, transform .6s ease;
+}
+#tip-text b { color: #b3260c; }
+#tip-text.hide { opacity: 0; -webkit-transform: translateY(10px); transform: translateY(10px); }
+#tip-dots { position: relative; margin-top: 22px; height: 12px; }
+#tip-dots span {
+    display: inline-block; width: 10px; height: 10px; margin: 0 5px; border-radius: 50%;
+    background: rgba(122,29,11,.25); -webkit-transition: background .4s; transition: background .4s;
+}
+#tip-dots span.on { background: #b3260c; }
+
+/* ---------- Progression ---------- */
+#loader {
+    position: absolute; left: 50%; right: 4%; bottom: 135px;
+    -webkit-animation: fadeUp 1.2s 1s both; animation: fadeUp 1.2s 1s both;
+}
+#status-line { width: 700px; margin: 0 auto 4px; padding: 0 30px; overflow: hidden; font-size: 26px; text-shadow: 0 2px 6px #000; }
+#status  { float: left; color: #fbeccd; }
+#percent { float: right; color: #f7c66b; font-weight: 800; }
+#gauge { position: relative; width: 700px; height: 92px; margin: 0 auto; }
+#gauge-track {
+    position: absolute; left: 26px; top: 31px; width: 648px; height: 28px; overflow: hidden;
+    border-radius: 14px; background: #1c0304;
+    box-shadow: inset 0 3px 8px rgba(0,0,0,.9);
+}
+#gauge-fill {
+    position: relative; width: 0; height: 100%; overflow: hidden; border-radius: 14px;
+    background: -webkit-linear-gradient(left, #8e1606, #e2421a 45%, #ff9b3a 85%, #ffe08a);
+    background: linear-gradient(to right, #8e1606, #e2421a 45%, #ff9b3a 85%, #ffe08a);
+    box-shadow: 0 0 14px rgba(255,120,40,.8);
+    -webkit-transition: width .5s ease-out; transition: width .5s ease-out;
+}
+#gauge-shine {
+    position: absolute; top: 0; left: -200px; width: 200px; height: 100%;
+    background: -webkit-linear-gradient(left, rgba(255,255,255,0), rgba(255,255,255,.55), rgba(255,255,255,0));
+    background: linear-gradient(to right, rgba(255,255,255,0), rgba(255,255,255,.55), rgba(255,255,255,0));
+    -webkit-animation: shine 2.4s linear infinite; animation: shine 2.4s linear infinite;
+}
+#gauge-frame { position: absolute; left: 0; top: 0; width: 700px; height: 92px; }
+#file {
+    width: 700px; margin: 2px auto 0; padding: 0 30px; text-align: center;
+    font-family: Consolas, "Courier New", monospace; font-size: 17px; color: rgba(251,236,205,.65);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis; text-shadow: 0 1px 3px #000;
+}
+
+/* ---------- Animations ---------- */
+@-webkit-keyframes kenburns { from { -webkit-transform: scale(1); } to { -webkit-transform: scale(1.07) translate(-1%, -1%); } }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.07) translate(-1%, -1%); } }
+@-webkit-keyframes pulse { 0%,100% { opacity: .28; } 50% { opacity: .5; } }
+@keyframes pulse { 0%,100% { opacity: .28; } 50% { opacity: .5; } }
+@-webkit-keyframes drift { from { -webkit-transform: translateX(-35%); } to { -webkit-transform: translateX(35%); } }
+@keyframes drift { from { transform: translateX(-35%); } to { transform: translateX(35%); } }
+@-webkit-keyframes rise {
+    0%   { -webkit-transform: translate(0, 0); opacity: 0; }
+    10%  { opacity: 1; }
+    50%  { -webkit-transform: translate(40px, -650px); }
+    85%  { opacity: .8; }
+    100% { -webkit-transform: translate(-30px, -1300px); opacity: 0; }
+}
+@keyframes rise {
+    0%   { transform: translate(0, 0); opacity: 0; }
+    10%  { opacity: 1; }
+    50%  { transform: translate(40px, -650px); }
+    85%  { opacity: .8; }
+    100% { transform: translate(-30px, -1300px); opacity: 0; }
+}
+@-webkit-keyframes shine { from { left: -200px; } to { left: 110%; } }
+@keyframes shine { from { left: -200px; } to { left: 110%; } }
+@-webkit-keyframes float { 0%,100% { -webkit-transform: translateY(0); } 50% { -webkit-transform: translateY(-12px); } }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@-webkit-keyframes slideRight { from { opacity: 0; -webkit-transform: translateX(-80px); } to { opacity: 1; -webkit-transform: translateX(0); } }
+@keyframes slideRight { from { opacity: 0; transform: translateX(-80px); } to { opacity: 1; transform: translateX(0); } }
+@-webkit-keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@-webkit-keyframes fadeUp { from { opacity: 0; -webkit-transform: translateY(40px); } to { opacity: 1; -webkit-transform: translateY(0); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+@-webkit-keyframes fadeDown { from { opacity: 0; -webkit-transform: translateY(-40px); } to { opacity: 1; -webkit-transform: translateY(0); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-40px); } to { opacity: 1; transform: translateY(0); } }

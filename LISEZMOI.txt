@@ -1,0 +1,23 @@
+ÉCRAN DE CHARGEMENT - Demon Slayer RP
+======================================
+
+Ce dossier N'EST PAS un addon : ne l'envoie pas dans garrysmod/addons du serveur.
+C'est une page web à héberger sur Internet (GitHub Pages, Netlify, Cloudflare Pages...).
+
+1) Héberger
+   Envoie TOUT le dossier (index.html, style.css, config.js, loading.js, img/ et la musique s'il y en a une).
+
+2) Brancher sur le serveur GMod
+   Dans garrysmod/cfg/server.cfg, ajoute :
+       sv_loadingurl "https://TON-SITE/index.html?map=%m"
+   Puis redémarre le serveur.
+
+3) Personnaliser (fichier config.js uniquement)
+   - nomServeur : nom affiché ("" = nom envoyé par GMod)
+   - musique    : mets un fichier music.mp3 à côté de index.html
+   - astuces    : les phrases qui tournent (le texte entre <b></b> est en gras rouge)
+
+4) Tester sans le jeu
+   Ouvre la page hébergée avec ?demo à la fin de l'adresse :
+       https://TON-SITE/index.html?demo
+   Une fausse progression se lance.
