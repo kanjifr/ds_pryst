@@ -95,9 +95,20 @@
         if (!CONFIG.musique || !musique) return;
         try {
             musique.src = CONFIG.musique;
-            musique.volume = Math.max(0, Math.min(1, (volume === undefined ? 1 : volume) * (CONFIG.volumeMax || 0.5)));
+            var cible = Math.max(0, Math.min(1, (volume === undefined ? 1 : volume) * (CONFIG.volumeMax || 0.2)));
+            // montée douce du volume sur 3 s
+            musique.volume = 0;
             var r = musique.play();
-            if (r && r["catch"]) r["catch"](function () {});
+            // un navigateur normal bloque le son tant qu'on n'a pas cliqué (pas GMod)
+            if (r && r["catch"]) r["catch"](function () {
+                document.onclick = document.onkeydown = function () { musique.play(); document.onclick = document.onkeydown = null; };
+            });
+            var pas = 0;
+            var fondu = setInterval(function () {
+                pas++;
+                musique.volume = Math.min(cible, cible * pas / 30);
+                if (pas >= 30) clearInterval(fondu);
+            }, 100);
         } catch (err) {}
     }
 

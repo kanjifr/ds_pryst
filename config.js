@@ -15,7 +15,7 @@ var CONFIG = {
 
     // Musique : mets un fichier "music.mp3" (ou .ogg) dans ce dossier. "" = pas de musique.
     musique: "music.mp3",
-    volumeMax: 0.5,            // multiplié par le volume du jeu (0 à 1)
+    volumeMax: 0.2,            // 0.2 = discret. Multiplié par le volume du jeu (0 à 1)
 
     // Temps entre deux astuces (secondes)
     dureeAstuce: 7,
